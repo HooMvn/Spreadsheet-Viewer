@@ -66,7 +66,7 @@ Spreadsheet Viewer V2/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/spreadsheet-viewer-v2.git
+git clone https://github.com/yourusername/spreadsheet-viewer.git
 ```
 
 ### Open the project
