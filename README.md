@@ -33,7 +33,7 @@ A modern, fast, and lightweight spreadsheet viewer built with vanilla JavaScript
 ## 📁 Project Structure
 
 ```
-Spreadsheet Viewer V2/
+Spreadsheet Viewer/
 │
 ├── index.html
 ├── style.css
