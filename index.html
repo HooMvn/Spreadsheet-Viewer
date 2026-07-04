@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">Spreadsheet Viewer</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ MOBILE TOPBAR ============ -->
+  <header class="mobile-topbar">
+    <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Menu">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 5h13M2.5 9h13M2.5 13h13"/></svg>
+    </button>
+    <span class="mobile-brand" data-i18n="brandName">Spreadsheet Viewer</span>
+    <button class="btn-icon" id="mobileSearchBtn" type="button">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M12 12L16 16"/></svg>
+    </button>
+  </header>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M3 6.5C3 5 4.3 4 6 4h8c1.7 0 3 1 3 2.5M3 13.5C3 15 4.3 16 6 16h8c1.7 0 3-1 3-2.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="6.5" cy="6.5" r="1.1" fill="white"/>
+            <circle cx="13.5" cy="13.5" r="1.1" fill="white"/>
+          </svg>
+        </span>
+        <span class="brand-name" data-i18n="brandName">Spreadsheet Viewer</span>
+        <button class="drawer-close-btn" id="drawerCloseBtn" type="button" aria-label="Close">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4l10 10M14 4L4 14"/></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-nav="dashboard">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="6" height="6" rx="1.2"/><rect x="10" y="2" width="6" height="6" rx="1.2"/><rect x="2" y="10" width="6" height="6" rx="1.2"/><rect x="10" y="10" width="6" height="6" rx="1.2"/></svg>
+          <span data-i18n="navDashboard">Dashboard</span>
+        </a>
+        <label for="fileUpload" class="nav-item" data-nav="upload">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12V3M5 7l4-4 4 4"/><path d="M3 13v1.5A1.5 1.5 0 0 0 4.5 16h9a1.5 1.5 0 0 0 1.5-1.5V13"/></svg>
+          <span data-i18n="navUpload">Upload File</span>
+        </label>
+        <a href="#" class="nav-item" data-nav="trash" id="openTrashBtn">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3.5 5h11M7 5V3.7c0-.4.3-.7.7-.7h2.6c.4 0 .7.3.7.7V5M4.5 5l.6 9c0 .8.7 1.5 1.5 1.5h4.8c.8 0 1.5-.7 1.5-1.5l.6-9"/></svg>
+          <span data-i18n="navTrash">Trash</span>
+          
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-bottom">
+      <a href="#" class="nav-item" data-nav="settings" id="openSettingsBtn">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="2.4"/><path d="M9 2.8v1.5M9 13.7v1.5M3.4 5.3l1.3.8M13.3 11.9l1.3.8M2.8 9h1.5M13.7 9h1.5M3.4 12.7l1.3-.8M13.3 6.1l1.3-.8"/></svg>
+        <span data-i18n="navSettings">Settings</span>
+      </a>
+      <button id="themeToggle" class="theme-toggle" type="button">
+        <svg class="icon-moon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.5 10.4A6 6 0 1 1 7.6 3.5a6.6 6.6 0 0 0 6.9 6.9Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="3.2"/><path d="M9 1.8v1.6M9 14.6v1.6M2.6 9H4.2M13.8 9h1.6M4.2 4.2l1.1 1.1M12.7 12.7l1.1 1.1M13.8 4.2l-1.1 1.1M5.3 12.7l-1.1 1.1"/></svg>
+        <span id="themeLabel" data-i18n="themeDark">Dark</span>
+      </button>
+      <button id="langToggle" class="theme-toggle" type="button">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="7"/><path d="M2 9h14M9 2c2 2.2 2 11.8 0 14M9 2c-2 2.2-2 11.8 0 14"/></svg>
+        <span id="langLabel">فارسی</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main-col">
+    <header class="topbar">
+      <div class="file-info">
+        <div class="file-badge" id="fileBadge">—</div>
+        <div class="file-meta">
+          <h1 id="fileName" data-i18n="noFileLoaded">No file loaded</h1>
+          <p id="fileMeta" data-i18n="fileMetaDefault">Upload a spreadsheet to get started</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="dd-wrap">
+          <button class="btn-tool" id="exportBtn" type="button" disabled>
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 2v10M5 8l4 4 4-4"/><path d="M3 14v.5A1.5 1.5 0 0 0 4.5 16h9a1.5 1.5 0 0 0 1.5-1.5V14"/></svg>
+            <span data-i18n="btnExport">Export</span>
+          </button>
+          <div class="dd-panel" id="exportPanel">
+            <div class="dd-option" id="exportCsvBtn"><span data-i18n="exportCsv">Export filtered (CSV)</span></div>
+            <div class="dd-option" id="exportXlsxBtn"><span data-i18n="exportXlsx">Export filtered (XLSX)</span></div>
+            <div class="dd-option" id="exportClipboardBtn"><span data-i18n="exportClipboard">Copy to clipboard</span></div>
+          </div>
+        </div>
+        <label for="fileUpload" class="btn-upload">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+          <span data-i18n="btnUploadFile">Upload File</span>
+        </label>
+        <input type="file" id="fileUpload" accept=".csv,.tsv,.xlsx,.xls,.xlsm,.xlsb,.ods,.xml"/>
+      </div>
+    </header>
+
+    <section class="toolbar">
+      <div class="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M12 12L16 16"/></svg>
+        <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search across all columns..."/>
+        <span class="shortcut" data-tooltip="Ctrl+K">⌘K</span>
+      </div>
+
+      <div class="toolbar-group">
+        <div class="dd-wrap">
+          <button class="btn-tool" id="filterBtn" type="button">
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 3.5h13l-5 6v4.2l-3 1.3V9.5z"/></svg>
+            <span data-i18n="btnFilter">Filter</span>
+            <span class="count-badge hidden" id="filterCount">0</span>
+          </button>
+          <div class="dd-panel" id="filterPanel"></div>
+        </div>
+        <div class="dd-wrap">
+          <button class="btn-tool" id="sortBtn" type="button">
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4v9M4 13l-2.2-2.2M4 13l2.2-2.2M14 14V5M14 5l-2.2 2.2M14 5l2.2 2.2"/></svg>
+            <span data-i18n="btnSort">Sort</span>
+            <span class="sort-label" id="sortLabel"></span>
+          </button>
+          <div class="dd-panel" id="sortPanel"></div>
+        </div>
+        <button class="btn-tool" id="columnsBtn" type="button">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="4" height="13" rx="1"/><rect x="7" y="2.5" width="4" height="13" rx="1"/><rect x="12" y="2.5" width="4" height="13" rx="1"/></svg>
+          <span data-i18n="btnColumns">Columns</span>
+          <span class="count-badge" id="columnsCount">0</span>
+        </button>
+      </div>
+
+      <div class="view-switch" id="viewSwitch">
+        <button class="view-btn active" data-view="list" type="button"><span data-i18n="viewList">List</span></button>
+        <button class="view-btn" data-view="cards" type="button"><span data-i18n="viewCards">Cards</span></button>
+        <button class="view-btn" data-view="table" type="button"><span data-i18n="viewTable">Table</span></button>
+        <button class="view-btn" data-view="grid" type="button"><span data-i18n="viewGrid">Grid</span></button>
+        <button class="view-btn" data-view="overview" type="button"><span data-i18n="viewOverview">Overview</span></button>
+      </div>
+    </section>
+
+    <div class="sheet-tabs hidden" id="sheetTabsBar"></div>
+
+    <div class="active-filters hidden" id="activeFiltersBar">
+      <div class="pills" id="activePills"></div>
+      <button class="btn-clear-all" id="clearFiltersBtn" data-i18n="btnClearAll">Clear all</button>
+    </div>
+
+    <main class="content-area" id="contentArea">
+      <div id="resultsGrid" class="grid view-list hidden"></div>
+      <div id="spreadsheetGridHost" class="spreadsheet-grid-host hidden"></div>
+      <div id="overviewPanel" class="overview-panel hidden"></div>
+
+      <!-- Loading -->
+      <div id="loadingState" class="loading-state hidden">
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div></div>
+        <p id="loadingSubtitle" data-i18n="loadingSubtitle">Reading sheets and detecting column types</p>
+        <div class="skeleton-list" id="skeletonList"></div>
+      </div>
+
+      <!-- Structured error -->
+      <div id="errorState" class="empty-state structured-error hidden">
+        <div class="empty-icon" id="errorIcon">⚠️</div>
+        <span class="error-type-badge" id="errorTypeBadge">error</span>
+        <h3 id="errorTitle">Couldn't open this file</h3>
+        <p id="errorMessage">Something went wrong.</p>
+        <p class="error-suggestion" id="errorSuggestion"></p>
+        <button id="resetErrorBtn" class="btn-ghost" data-i18n="btnTryAnother">Try another file</button>
+      </div>
+
+      <!-- Empty search result -->
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon">🔍</div>
+        <h3 data-i18n="emptyTitle">No rows found</h3>
+        <p data-i18n="emptySubtitle">Try adjusting your search or filters</p>
+        <button id="resetEmptyBtn" class="btn-ghost" data-i18n="btnResetFilters">Reset filters</button>
+      </div>
+
+      <!-- Onboarding / dropzone -->
+      <div id="importState" class="onboarding">
+        <div class="dropzone" id="dropzone">
+          <div class="dropzone-icon">📂</div>
+          <h2 data-i18n="onboardTitle">Drop your spreadsheet here</h2>
+          <p data-i18n="onboardSubtitle">or click to browse your files</p>
+          <label for="fileUpload" class="btn-upload" style="display:inline-flex;margin-top:14px;cursor:pointer;" data-i18n="btnChooseFile">Choose File</label>
+          <div class="onboard-formats">
+            <span>.xlsx</span><span>.xls</span><span>.xlsm</span><span>.xlsb</span>
+            <span>.csv</span><span>.tsv</span><span>.ods</span><span>.xml</span>
+          </div>
+          <p class="onboard-maxsize" data-i18n="onboardMaxSize">Recommended max size: ~50MB per file</p>
+          <button class="btn-ghost" id="loadSampleBtn" style="margin-top:10px" data-i18n="onboardSample">Try a sample file</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="pagination-bar hidden" id="paginationBar">
+      <span class="pg-summary" id="pgSummary"></span>
+      <div class="pg-controls" id="pgControls"></div>
+    </footer>
+  </div>
+
+  <!-- ============ RIGHT PANEL ============ -->
+  <aside class="right-panel" id="rightPanel">
+    <section class="panel-block">
+      <div class="panel-head">
+        <h3><span data-i18n="panelColumns">Columns</span> <span class="count-badge" id="panelColumnsCount">0</span></h3>
+        <button class="collapse-btn" id="collapsePanelBtn" type="button" title="Close panel">✕</button>
+      </div>
+      <div class="col-search">
+        <input type="text" id="columnSearch" data-i18n-placeholder="columnSearchPlaceholder" placeholder="Search columns..."/>
+      </div>
+      <div class="column-list" id="columnList"></div>
+      <button class="btn-reset" id="resetColumnsBtn" type="button" data-i18n="btnResetColumns">Reset to default</button>
+    </section>
+    <section class="panel-block">
+      <h3 data-i18n="panelSummary">Summary</h3>
+      <div class="summary-list" id="summaryList"></div>
+    </section>
+    <section class="panel-block">
+      <h3 data-i18n="panelTypes">Detected Types</h3>
+      <div class="types-wrap" id="typesWrap"></div>
+    </section>
+  </aside>
+</div>
+
+<!-- ============ MOBILE BOTTOM NAV ============ -->
+<nav class="bottom-nav">
+  <button class="bn-item active" data-bn="dashboard">
+    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="6" height="6" rx="1.2"/><rect x="10" y="2" width="6" height="6" rx="1.2"/><rect x="2" y="10" width="6" height="6" rx="1.2"/><rect x="10" y="10" width="6" height="6" rx="1.2"/></svg>
+    <span data-i18n="navDashboard">Dashboard</span>
+  </button>
+  <label for="fileUpload" class="bn-item">
+    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12V3M5 7l4-4 4 4"/><path d="M3 13v1.5A1.5 1.5 0 0 0 4.5 16h9a1.5 1.5 0 0 0 1.5-1.5V13"/></svg>
+    <span data-i18n="navUpload">Upload</span>
+  </label>
+  <button class="bn-item" data-bn="trash">
+    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3.5 5h11M7 5V3.7c0-.4.3-.7.7-.7h2.6c.4 0 .7.3.7.7V5M4.5 5l.6 9c0 .8.7 1.5 1.5 1.5h4.8c.8 0 1.5-.7 1.5-1.5l.6-9"/></svg>
+    <span data-i18n="navTrash">Trash</span>
+  </button>
+  <button class="bn-item" data-bn="settings">
+    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="2.4"/><path d="M9 2.8v1.5M9 13.7v1.5M3.4 5.3l1.3.8M13.3 11.9l1.3.8M2.8 9h1.5M13.7 9h1.5M3.4 12.7l1.3-.8M13.3 6.1l1.3-.8"/></svg>
+    <span data-i18n="navSettings">Settings</span>
+  </button>
+</nav>
+
+<!-- ============ SETTINGS FLOATING MODAL ============ -->
+<div class="modal-backdrop hidden" id="settingsBackdrop"></div>
+<div class="floating-modal hidden" id="settingsModal" role="dialog" aria-modal="true">
+  <div class="modal-header">
+    <div class="modal-title-wrap">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20"><circle cx="10" cy="10" r="2.6"/><path d="M10 3v1.6M10 15.4V17M3.7 6.2l1.4.8M14.9 13l1.4.8M3 10h1.6M15.4 10H17M3.7 13.8l1.4-.8M14.9 7l1.4-.8"/></svg>
+      <h2 data-i18n="settingsTitle">Settings</h2>
+    </div>
+    <button class="modal-close-btn" id="closeSettingsBtn" type="button" title="Close">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l10 10M14 4L4 14"/></svg>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="settings-group">
+      <label class="settings-row">
+        <div class="settings-label-wrap">
+          <span data-i18n="settingsRowsPerPage">Rows per page</span>
+          <span class="settings-hint">How many rows to show at a time</span>
+        </div>
+        <select id="settingRowsPerPage" class="settings-select">
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="60">60</option>
+          <option value="120">120</option>
+        </select>
+      </label>
+      <label class="settings-row">
+        <div class="settings-label-wrap">
+          <span data-i18n="settingsDefaultView">Default view</span>
+          <span class="settings-hint">View applied when a file is opened</span>
+        </div>
+        <select id="settingDefaultView" class="settings-select">
+          <option value="list">List</option>
+          <option value="cards">Cards</option>
+          <option value="table">Table</option>
+          <option value="grid">Grid</option>
+        </select>
+      </label>
+      <label class="settings-row checkbox-row">
+        <div class="settings-label-wrap">
+          <span data-i18n="settingsAutoHeader">Auto-detect header row</span>
+          <span class="settings-hint">Find the best header row automatically</span>
+        </div>
+        <div class="toggle-wrap">
+          <input type="checkbox" id="settingAutoHeader" class="toggle-input"/>
+          <span class="toggle-track"></span>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn-ghost" id="cancelSettingsBtn" type="button" data-i18n="btnCancel">Cancel</button>
+    <button class="btn-upload" id="saveSettingsBtn" type="button" data-i18n="btnSaveSettings">Save Settings</button>
+  </div>
+</div>
+
+<!-- ============ TRASH FLOATING MODAL ============ -->
+<div class="modal-backdrop hidden" id="trashBackdrop"></div>
+<div class="floating-modal floating-modal--wide hidden" id="trashModal" role="dialog" aria-modal="true">
+  <div class="modal-header">
+    <div class="modal-title-wrap">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20"><path d="M4 5.5h12M8 5.5V4.2c0-.4.3-.7.7-.7h2.6c.4 0 .7.3.7.7v1.3M5 5.5l.6 10c0 .8.7 1.5 1.5 1.5h5.8c.8 0 1.5-.7 1.5-1.5l.6-10"/></svg>
+      <h2 data-i18n="trashTitle">Trash</h2>
+      <span class="count-badge hidden" id="trashCount">0</span>
+    </div>
+    <button class="modal-close-btn" id="closeTrashBtn" type="button" title="Close">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l10 10M14 4L4 14"/></svg>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="trash-empty-state hidden" id="trashEmpty">
+      <div class="trash-empty-icon">🗑️</div>
+      <p data-i18n="trashEmpty">Trash is empty.</p>
+    </div>
+    <div id="trashTableWrap" class="trash-table-wrap hidden">
+      <div class="trash-bulk-actions" id="trashActions">
+        <label class="trash-select-all-label">
+          <input type="checkbox" id="selectAllTrashBtn"/>
+          <span data-i18n="btnSelectAll">Select All</span>
+        </label>
+        <div class="trash-bulk-btns">
+          <button class="btn-ghost sm" id="recoverSelectedBtn" data-i18n="btnRecoverSelected">Recover</button>
+          <button class="btn-ghost sm danger" id="deleteSelectedBtn" data-i18n="btnDeleteSelected">Delete</button>
+        </div>
+      </div>
+      <div class="trash-table-scroll">
+        <table class="data-table trash-table">
+          <thead id="trashTableHead"></thead>
+          <tbody id="trashTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CUSTOM CONFIRM DIALOG ============ -->
+<div class="confirm-backdrop hidden" id="confirmBackdrop"></div>
+<div class="confirm-dialog hidden" id="confirmDialog" role="alertdialog" aria-modal="true">
+  <div class="confirm-icon">🗑️</div>
+  <h3 class="confirm-title" id="confirmTitle">Delete forever?</h3>
+  <p class="confirm-msg" id="confirmMsg">This cannot be undone.</p>
+  <div class="confirm-btns">
+    <button class="confirm-btn-cancel" id="confirmCancelBtn" type="button">Cancel</button>
+    <button class="confirm-btn-delete" id="confirmDeleteBtn" type="button">Delete</button>
+  </div>
+</div>
+
+<!-- ============ MODULES ============ -->
+<script src="src/state.js"></script>
+<script src="src/storage.js"></script>
+<script src="src/i18n.js"></script>
+<script src="src/file-engine.js"></script>
+<script src="src/worker-source.js"></script>
+<script src="src/parser.js"></script>
+<script src="src/filters.js"></script>
+<script src="src/renderer.js"></script>
+<script src="src/grid.js"></script>
+<script src="src/toast.js"></script>
+<script src="src/export.js"></script>
+<script src="src/shortcuts.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
