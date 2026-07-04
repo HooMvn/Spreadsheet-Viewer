@@ -770,7 +770,6 @@
       render();
     });
 
-    DOM.collapsePanelBtn.addEventListener("click", () => DOM.rightPanel.classList.toggle("collapsed"));
     DOM.columnsBtn.addEventListener("click", () => { DOM.rightPanel.classList.remove("collapsed"); });
     DOM.columnSearch.addEventListener("input", function () { renderColumnsPanel(this.value); });
     DOM.resetColumnsBtn.addEventListener("click", () => {
